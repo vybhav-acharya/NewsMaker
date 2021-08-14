@@ -1,12 +1,16 @@
 package com.example.newsmaker;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +38,11 @@ public class MainActivity extends AppCompatActivity implements OnNoteListener {
         setContentView(R.layout.activity_main);
         Intent intent=getIntent();
         String name=intent.getStringExtra("name");
-        Toast.makeText(MainActivity.this,name,Toast.LENGTH_LONG);
+        ProgressDialog mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setMessage("Loading...");
+        mProgressDialog.show();
+
          final String API_KEY = "b8987a26ed8b4150aa33396681940ee3";
         final RecyclerView recyclerView=findViewById(R.id.main_activity_rv);
         final LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
@@ -47,7 +55,8 @@ public class MainActivity extends AppCompatActivity implements OnNoteListener {
            @Override
            public void onResponse(@NotNull Call<ResponseModel> call, @NotNull Response<ResponseModel> response) {
                if(response.body().getStatus().equals("ok"))
-               {
+               {if (mProgressDialog.isShowing())
+                   mProgressDialog.dismiss();
                    articlesforviews=response.body().getArticles();
                    if(response.body().getTotalResults()>0)
                    {
@@ -60,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements OnNoteListener {
 
            @Override
            public void onFailure(Call<ResponseModel> call, Throwable t) {
+               if (mProgressDialog.isShowing())
+                   mProgressDialog.dismiss();
                Log.e("out", t.toString());
            }
        });
@@ -81,4 +92,5 @@ public class MainActivity extends AppCompatActivity implements OnNoteListener {
                 startActivity(intent);
     }
 }
+
 
