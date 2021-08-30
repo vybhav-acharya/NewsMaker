@@ -2,6 +2,7 @@ package com.example.newsmaker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +20,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import android.content.pm.PackageManager;
+
+import com.example.newsmaker.database.Note;
+import com.example.newsmaker.database.NoteVIewModel;
 import com.example.newsmaker.models.Article;
 import com.example.newsmaker.models.ResponseModel;
 import com.example.newsmaker.rests.APIClient;
@@ -28,9 +32,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements OnNoteListener {
     private List<Article> articlesforviews=new ArrayList<>();;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,12 +90,12 @@ public class MainActivity extends AppCompatActivity implements OnNoteListener {
         Intent intent=new Intent(this,Views.class);
         intent.putExtra("url", articlesforviews.get(position).getUrl());
         intent.putExtra("title", articlesforviews.get(position).getTitle());
-        intent.putExtra("img",  articlesforviews.get(position).getUrlToImage());
-        intent.putExtra("date",  articlesforviews.get(position).getPublishedAt());
-        intent.putExtra("source",  articlesforviews.get(position).getSource().getName());
-        intent.putExtra("author",  articlesforviews.get(position).getAuthor());
-        intent.putExtra("content",articlesforviews.get(position).getContent());
-                startActivity(intent);
+        intent.putExtra("author", articlesforviews.get(position).getAuthor());
+        intent.putExtra("urltoimage", articlesforviews.get(position).getUrlToImage());
+
+
+        startActivity(intent);
+
     }
 }
 

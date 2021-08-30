@@ -12,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewsMaker">
-        <activity android:name=".MainActivity"></activity>
+        <activity
+            android:name=".database.MainRecentsActivity"
+            android:exported="true" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".Views" />
         <activity android:name=".Starter">
             <intent-filter>

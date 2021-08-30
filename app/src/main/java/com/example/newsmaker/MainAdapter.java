@@ -50,7 +50,7 @@ public  class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> i
     public MainAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         this.parent = parent;
         this.viewType = viewType;
-        View views=inflater.inflate(R.layout.list1_item, parent, false);
+        View views=inflater.inflate(R.layout.list_item, parent, false);
 
         return new MainAdapter.ViewHolder(views,mNoteListener);
     }
@@ -62,13 +62,18 @@ public  class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> i
     public void onBindViewHolder(@NonNull MainAdapter.ViewHolder holder, int position) {
         final Article now = array_articles.get(position);
         if (!TextUtils.isEmpty(now.getTitle())) {
-            holder.title_text.setText(now.getTitle());
+            holder.titleView.setText(now.getTitle());
         }
+        if (!TextUtils.isEmpty(now.getAuthor())) {
+            String noww="By:"+now.getAuthor();
+            holder.authorView.setText(noww);
+        }
+
 
         Glide.with(context)
                 .load(now.getUrlToImage())
 
-                .into(holder.description_text);
+                .into(holder.imageView);
 
 
     }
@@ -84,16 +89,18 @@ public  class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> i
 
 
     public class  ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView title_text;
+        TextView titleView,authorView;
 
-        ImageView description_text;
+        ImageView imageView;
         OnNoteListener oneNoteListener;
+
 
         public ViewHolder(View itemView,OnNoteListener oneNoteListener) {
             super(itemView);
-            this.title_text = itemView.findViewById(R.id.title_article);
+            this.titleView = itemView.findViewById(R.id.txvTitle);
+            this.authorView=itemView.findViewById(R.id.txvAuthor);
+            this.imageView = itemView.findViewById(R.id.imageView);
 
-            this.description_text = itemView.findViewById(R.id.imageView);
             this.oneNoteListener=oneNoteListener;
             itemView.setOnClickListener(this);
 
