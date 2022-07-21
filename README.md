@@ -1,5 +1,8 @@
 # NewsMaker
 Here we have made a search engine for all news , using the news API
 
-Basically whenever we try searching for something, we directly hit the news api regarding the information needed . We use retrofit to parse the responses coming from the api into a format which can be parsed into objects which our recycler view can parse easily .
- 
+
+Based on the keywords mentioned in the search bar , our app essentially sends API to newsAPI.
+The response is parsed using retrofit and displayed using recycler views.
+
+We also stored the previously searched results in a local database called ROOM
